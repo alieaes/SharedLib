@@ -5,7 +5,7 @@
 #include <qdatetime.h>
 #endif
 
-using namespace Library::Logger;
+using namespace Shared::Logger;
 
 void Log::Debug( const char* LOGTYPE, const char* fileName, int codeLine, std::string format )
 {
