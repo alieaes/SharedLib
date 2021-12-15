@@ -1,6 +1,8 @@
 #ifndef __HDR_SINGLETON__
 #define __HDR_SINGLETON__
 
+#include <mutex>
+
 #include "Shared_Defs.h"
 
 namespace Shared
@@ -16,7 +18,7 @@ namespace Shared
             static T* GetInstance()
             {
                 if( _instance == NULLPTR )
-                    _instance = new T;
+                    std::call_once( _flag, []() { _instance = new T; } );
 
                 return _instance;
             }
@@ -29,10 +31,15 @@ namespace Shared
 
         private:
             static T* _instance;
+            static std::once_flag _flag;
+
         };
 
         template < typename T >
         T* Singleton<T>::_instance = NULLPTR;
+
+        template < typename T >
+        std::once_flag Singleton<T>::_flag;
     }
 }
 
