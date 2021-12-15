@@ -13,8 +13,8 @@
 #endif // USING_QTLIB
 
 #define LOGD(LOGTYPE, ...) \
-    Shared::Logger::Log *LbLogger; \
-    LbLogger->Debug(LOGTYPE, __FILE__, __LINE__, fmt::format(__VA_ARGS__))
+    TyStLog::GetInstance()->Debug(LOGTYPE, __FILE__, __LINE__, fmt::format(__VA_ARGS__))
+
 #define USE_LOGGER_INIT
 
 namespace Shared
