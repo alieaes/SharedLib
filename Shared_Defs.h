@@ -14,3 +14,5 @@
 
 #define IF_FALSE_CONTINUE(x) if( (x) == false ) continue;
 #define IF_TRUE_CONTINUE(x) if( (x) == true ) continue;
+
+#define DEFAULT_TIME_STRING "yyyy-MM-dd HH:mm:ss"
