@@ -28,7 +28,7 @@ namespace Shared
             ~Log() {}
 
             // 디버그용 로그
-            static void Debug( const char* LOGTYPE, const char* fileName, int codeLine, std::string format );
+            static void Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format );
 
             // 파일 기록용 로그
             static void Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format );

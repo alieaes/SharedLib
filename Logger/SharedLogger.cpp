@@ -7,7 +7,7 @@
 
 using namespace Shared::Logger;
 
-void Log::Debug( const char* LOGTYPE, const char* fileName, int codeLine, std::string format )
+void Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format )
 {
 #ifdef USING_QTLIB
     QDateTime dtNow = QDateTime::currentDateTime();
