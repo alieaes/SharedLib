@@ -18,5 +18,12 @@ namespace Shared
         std::wstring                 ConvertSeparator( const std::wstring& sStr );
 
         bool                         IsExistFile( const std::wstring& sPath );
+
+        std::wstring                 SeparateFileNameToExts( const std::wstring& sFileFullPath );
+
+        std::wstring                 GetFileExts( const std::wstring& sFileFullPath );
+
+        uintmax_t                    GetFileSize( const std::wstring& sPath );
+
     }
 }

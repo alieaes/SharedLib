@@ -15,10 +15,13 @@ namespace Shared
     {
         std::wstring GetCurrentPath()
         {
-            std::wstring sCurrentPath = std::filesystem::current_path();
-            std::replace( sCurrentPath.begin(), sCurrentPath.end(), L'\\', L'/' );
+            wchar_t result[ MAX_PATH ];
+            std::wstring sCurrentPath = std::wstring( result, GetModuleFileName( NULL, result, MAX_PATH ) );
+            sCurrentPath = ConvertSeparator( sCurrentPath );
 
-            return sCurrentPath;
+            int find = sCurrentPath.rfind( L'/' );
+
+            return sCurrentPath.substr( 0, find );
         }
 
         std::wstring ConvertSeparator( const std::wstring& sStr )
@@ -31,6 +34,34 @@ namespace Shared
         bool IsExistFile( const std::wstring& sPath )
         {
             return std::filesystem::exists( sPath );
+        }
+
+        std::wstring SeparateFileNameToExts( const std::wstring& sFileFullPath )
+        {
+            // TODO : 현재 확장자가 없는 파일은 고려되고 있지 않음 추가 필요
+            if( sFileFullPath.empty() == true )
+                return std::wstring();
+
+            std::wstring sFileName = sFileFullPath;
+            int find = sFileName.rfind( L'.' );
+
+            return sFileName.substr( 0, find );
+        }
+
+        std::wstring GetFileExts( const std::wstring& sFileFullPath )
+        {
+            // TODO : 현재 확장자가 없는 파일은 고려되고 있지 않음 추가 필요
+            if( sFileFullPath.empty() == true )
+                return std::wstring();
+
+            std::wstring sExts = sFileFullPath;
+            int find = sExts.rfind( L'.' );
+            return sExts.substr( find, sExts.length() - find );
+        }
+
+        uintmax_t GetFileSize( const std::wstring& sPath )
+        {
+            return std::filesystem::file_size( sPath );
         }
     }
 }
