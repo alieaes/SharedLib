@@ -26,11 +26,13 @@ namespace Shared
             std::wstring       sFilePath;
             std::wstring       sFileFullPath;
 
-            int                nMaxFileSize  = 50;
-            int                nMaxFileCnt   = 5;
+            // MB 단위
+            uintmax_t          nMaxFileSize        = 50;
+            int                nMaxFileCnt         = 5;
 
-            bool               isUseCompress = false;
-            bool               isUseAsync    = false;
+            bool               isUseFileNumbering  = false;
+            bool               isUseCompress       = false;
+            bool               isUseAsync          = false;
 
             int                nMaxCompressFileCnt = 5;
 
@@ -41,6 +43,7 @@ namespace Shared
                 else
                     return false;
             }
+
         } FILEMGR;
 
         typedef struct _FILEITEM
@@ -55,6 +58,7 @@ namespace Shared
                 else
                     return false;
             }
+
         } FILEITEM;
 
         class FileMgr
@@ -72,6 +76,8 @@ namespace Shared
             FILEMGR                                            retrieveFileMgr( FILE_UNIQUE_NAME sUnique );
 
             void                                               writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents );
+
+            std::wstring                                       checkFileNumbering( FILE_UNIQUE_NAME sUnique );
 
             void                                               enQueueItem( FILEITEM item );
             FILEITEM                                           deQueueItem();

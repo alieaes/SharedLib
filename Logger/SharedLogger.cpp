@@ -28,6 +28,7 @@ void Log::init( TyLogger tyLogger )
         fileMgr.sFileName = L"A2I-SVC";
         fileMgr.sFilePath = GetCurrentPath();
         fileMgr.isUseAsync = true;
+        fileMgr.isUseFileNumbering = true;
 
         stFileMgr->InitFileMgr( fileMgr );
     }

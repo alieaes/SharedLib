@@ -4,6 +4,7 @@
 #include "SharedPath.h"
 #include "Shared_Defs.h"
 #include "string/SharedString.h"
+#include "formatter/format.h"
 
 #include <thread>
 #include <fstream>
@@ -126,7 +127,12 @@ void FileMgr::writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
     if( fileMgr.isValid() == false )
         return;
 
-    std::ofstream ofs( fileMgr.sFileFullPath, std::ios_base::out | std::ios_base::app );
+    std::wstring sFileFullPath = fileMgr.sFileFullPath;
+
+    if( fileMgr.isUseFileNumbering == true )
+        sFileFullPath = checkFileNumbering( sUnique );
+
+    std::ofstream ofs( sFileFullPath, std::ios_base::out | std::ios_base::app );
 
     if( ofs.fail() == true )
     {
@@ -136,4 +142,45 @@ void FileMgr::writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
     ofs << Shared::String::ws2s( sContents );
 
     ofs.close();
+}
+
+std::wstring FileMgr::checkFileNumbering( FILE_UNIQUE_NAME sUnique )
+{
+    FILEMGR fileMgr = retrieveFileMgr( sUnique );
+
+    if( fileMgr.isValid() == false )
+        return std::wstring();
+
+    std::wstring sFileFullPath;
+
+    std::wstring sFileName = Shared::Path::SeparateFileNameToExts( fileMgr.sFileFullPath );
+    std::wstring sExts = Shared::Path::GetFileExts( fileMgr.sFileFullPath );
+
+    for( int idx = 0; idx < fileMgr.nMaxFileCnt; ++idx )
+    {
+        std::wstring sTmp = fmt::format( L"{}-[{}]{}", sFileName, idx, sExts );
+
+        if( Shared::Path::IsExistFile( sTmp ) == true )
+        {
+            auto nFileSize = Shared::Path::GetFileSize( sTmp );
+
+            if( nFileSize > ( fileMgr.nMaxFileSize * 1024000 ) )
+            {
+                // 파일 사이즈가 더 크다면 파일 개수를 확인하고 압축을 진행해야함
+                continue;
+            }
+            else
+            {
+                sFileFullPath = sTmp;
+                break;
+            }
+        }
+        else
+        {
+            sFileFullPath = sTmp;
+            break;
+        }
+    }
+
+    return sFileFullPath;
 }
