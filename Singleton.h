@@ -1,4 +1,4 @@
-#ifndef __HDR_SINGLETON__
+ï»¿#ifndef __HDR_SINGLETON__
 #define __HDR_SINGLETON__
 
 #include <mutex>
@@ -6,9 +6,9 @@
 #include "Shared_Defs.h"
 
 /*
-* Class T¸¦ SingleTonÀ¸·Î »ç¿ëÇÒ °æ¿ì, Çì´õÆÄÀÏÀÇ Àü¿ªÀ¸·Î typedef¸¦ ¼³Á¤
+* Class Të¥¼ SingleTonìœ¼ë¡œ ì‚¬ìš©í•  ê²½ìš°, í—¤ë”íŒŒì¼ì˜ ì „ì—­ìœ¼ë¡œ typedefë¥¼ ì„¤ì •
 * typedef Shared::Singletons::Singleton<T> typedefName;
-* ÀÌÈÄ GetInstance·Î Instance¸¦ °¡Á®¿È
+* ì´í›„ GetInstanceë¡œ Instanceë¥¼ ê°€ì ¸ì˜´
 */
 
 namespace Shared

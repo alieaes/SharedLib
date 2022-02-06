@@ -1,8 +1,9 @@
-#ifndef __HDR_SHARED_LOGGER__
+ï»¿#ifndef __HDR_SHARED_LOGGER__
 #define __HDR_SHARED_LOGGER__
 #endif
 
 #include "Singleton.h"
+
 #include <formatter/format.h>
 #include <string>
 #include <time.h>
@@ -21,17 +22,26 @@ namespace Shared
 {
     namespace Logger
     {
+        typedef struct _LOGGER
+        {
+            bool                     isFileLogging = false;
+        } TyLogger;
+
         class Log
         {
         public:
             Log() {}
             ~Log() {}
 
-            // µğ¹ö±×¿ë ·Î±×
-            static void Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format );
+            static void              init( TyLogger tyLogger );
+            // ë””ë²„ê·¸ìš© ë¡œê·¸
+            static void              Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format );
 
-            // ÆÄÀÏ ±â·Ï¿ë ·Î±×
-            static void Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format );
+            // íŒŒì¼ ê¸°ë¡ìš© ë¡œê·¸
+            static void              Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format );
+
+        private:
+            inline static bool       _isFileLogging;
         };
     }
 }
