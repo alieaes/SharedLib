@@ -1,4 +1,4 @@
-#ifndef __HDR_SHARED_CHECKER__
+ï»¿#ifndef __HDR_SHARED_CHECKER__
 #define __HDR_SHARED_CHECKER__
 
 #pragma once
@@ -13,8 +13,8 @@
 #include <chrono>
 
 /*
-* »ç¿ë¹æ¹ı : ÃøÁ¤ÇÏ°í ½ÍÀº °÷¿¡ CHECK_TIME_START·Î ÃøÁ¤ ½ÃÀÛ
-*            Áß°£¿¡¼­ ÃøÁ¤ÇÏ°í ½ÍÀº °÷¿¡¼­ INTERIM ÇÔ¼ö »ç¿ë, Á¾·á ½Ã END ÇÔ¼ö »ç¿ë
+* ì‚¬ìš©ë°©ë²• : ì¸¡ì •í•˜ê³  ì‹¶ì€ ê³³ì— CHECK_TIME_STARTë¡œ ì¸¡ì • ì‹œì‘
+*            ì¤‘ê°„ì—ì„œ ì¸¡ì •í•˜ê³  ì‹¶ì€ ê³³ì—ì„œ INTERIM í•¨ìˆ˜ ì‚¬ìš©, ì¢…ë£Œ ì‹œ END í•¨ìˆ˜ ì‚¬ìš©
 */
 
 #define CHECK_TIME_START                                                                                                                     \
@@ -39,7 +39,8 @@ namespace Shared
 
             double                                             CheckTimeEnd( std::wstring sKey );
 
-            std::wstring                                       CreateKeyName( DWORD dwThreadId, char* sFunctionName );
+            std::wstring                                       CreateKeyName( DWORD dwThreadId, const char* sFunctionName );
+
         private:
             std::unordered_map< std::wstring, std::chrono::system_clock::time_point >            _mapCheckTime;
 

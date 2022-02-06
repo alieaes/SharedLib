@@ -1,7 +1,7 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Logger/SharedLogger.h"
 #include "SharedSppedChecker.h"
-#include "string/string.h"
+#include "string/SharedString.h"
 
 #ifdef USING_QTLIB
 #include <qdatetime.h>
@@ -9,7 +9,7 @@
 
 using namespace Shared::SpeedChecker;
 
-std::string logger = "TIMECHECKER";
+const std::string logger = "TIMECHECKER";
 
 void Checker::CheckTimeStart( std::wstring sKey )
 {
@@ -21,8 +21,8 @@ void Checker::CheckTimeStart( std::wstring sKey )
     }
     else
     {
-        // ½º·¹µå ¹øÈ£¿Í ÇÔ¼ö ÀÌ¸§À» Á¶ÇÕÇß´Âµ¥ ÀÖ´Â °æ¿ì°¡ ÀÖ...³ª?
-        // override ÇÑ °÷¿¡¼­ ¹ß»ı ÇÒ ¼ö´Â ÀÖÀ» ¹ıÇÔ, ¸¸¾à ¹ß»ıÇÑ´Ù¸é ÀúÀå¹æ½Ä º¯°æ ÇÊ¿ä
+        // ìŠ¤ë ˆë“œ ë²ˆí˜¸ì™€ í•¨ìˆ˜ ì´ë¦„ì„ ì¡°í•©í–ˆëŠ”ë° ìˆëŠ” ê²½ìš°ê°€ ìˆ...ë‚˜?
+        // override í•œ ê³³ì—ì„œ ë°œìƒ í•  ìˆ˜ëŠ” ìˆì„ ë²•í•¨, ë§Œì•½ ë°œìƒí•œë‹¤ë©´ ì €ì¥ë°©ì‹ ë³€ê²½ í•„ìš”
         assert( false );
     }
 
@@ -40,8 +40,8 @@ double Checker::CheckTimeInterimFindings( std::wstring sKey )
     std::chrono::duration<double> sec;
 
     /*
-    * Áß°£¿¡ Ã¼Å©ÇÑ °æ¿ì°¡ Á¸ÀçÇÑ´Ù¸é InterimFindings¿¡ °ªÀÌ Á¸ÀçÇÔ, Áß°£ Ã¼Å© ½Ã°£ ~ È£ÃâµÈ ½ÃÁ¡ ±îÁöÀÇ ½Ã°£ Â÷¸¦ ±¸ÇÔ
-    * Á¸ÀçÇÏÁö ¾Ê´Â´Ù¸é ½ÃÀÛ ½Ã°£ ~ È£ÃâµÈ ½ÃÁ¡ÀÇ ½Ã°£À» ±¸ÇÏ°í, È£ÃâµÈ ½ÃÁ¡À» ¹é¾÷ÇÔ
+    * ì¤‘ê°„ì— ì²´í¬í•œ ê²½ìš°ê°€ ì¡´ì¬í•œë‹¤ë©´ InterimFindingsì— ê°’ì´ ì¡´ì¬í•¨, ì¤‘ê°„ ì²´í¬ ì‹œê°„ ~ í˜¸ì¶œëœ ì‹œì  ê¹Œì§€ì˜ ì‹œê°„ ì°¨ë¥¼ êµ¬í•¨
+    * ì¡´ì¬í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ì‹œì‘ ì‹œê°„ ~ í˜¸ì¶œëœ ì‹œì ì˜ ì‹œê°„ì„ êµ¬í•˜ê³ , í˜¸ì¶œëœ ì‹œì ì„ ë°±ì—…í•¨
     */
 
     if( _mapInterimFindings.count( sKey ) > 0 )
@@ -61,10 +61,10 @@ double Checker::CheckTimeInterimFindings( std::wstring sKey )
     return sec.count();
 }
 
-std::wstring Checker::CreateKeyName( DWORD dwThreadId, char* sFunctionName )
+std::wstring Checker::CreateKeyName( DWORD dwThreadId, const char* sFunctionName )
 {
     std::string str( sFunctionName );
-    std::wstring sKey = Shared::String::StringToWString( str ) + std::to_wstring( dwThreadId );
+    std::wstring sKey = Shared::String::s2ws( str ) + std::to_wstring( dwThreadId );
     return sKey;
 }
 
