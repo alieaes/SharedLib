@@ -18,6 +18,9 @@ namespace Shared
     {
         std::wstring                 s2ws( const std::string& str );
         std::string                  ws2s( const std::wstring& wstr );
+
+        bool                         EndsWith( const std::string& sFullString, const std::string& sEnds );
+        bool                         EndsWith( const std::wstring& sFullString, const std::wstring& sEnds );
     }
 }
 

@@ -28,5 +28,31 @@ namespace Shared
 
             return converterX.to_bytes( wstr );
         }
+
+        bool EndsWith( const std::string& sFullString, const std::string& sEnds )
+        {
+            if( sFullString.length() >= sEnds.length() )
+            {
+                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullString의 길이에서 ending의 길이만큼 뺀 위치부터 같은지 검사
+            }
+            else
+            {
+                //fullString의 길이보다 ending의 길이가 긴 경우 -> 항상 거짓
+                return false;
+            }
+        }
+
+        bool EndsWith( const std::wstring& sFullString, const std::wstring& sEnds )
+        {
+            if( sFullString.length() >= sEnds.length() )
+            {
+                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullString의 길이에서 ending의 길이만큼 뺀 위치부터 같은지 검사
+            }
+            else
+            {
+                //fullString의 길이보다 ending의 길이가 긴 경우 -> 항상 거짓
+                return false;
+            }
+        }
     }
 }
