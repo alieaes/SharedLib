@@ -1,5 +1,7 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "SharedPath.h"
+#include "SharedString.h"
+
 #include "Shared_Defs.h"
 
 #include <filesystem>
@@ -13,15 +15,20 @@ namespace Shared
 {
     namespace Path
     {
-        std::wstring GetCurrentPath()
+        std::wstring GetCurrentPath( bool bIncludeSeparate /*= false*/ )
         {
+            std::wstring ret;
             wchar_t result[ MAX_PATH ];
             std::wstring sCurrentPath = std::wstring( result, GetModuleFileName( NULL, result, MAX_PATH ) );
             sCurrentPath = ConvertSeparator( sCurrentPath );
 
             int find = sCurrentPath.rfind( L'/' );
 
-            return sCurrentPath.substr( 0, find );
+            ret = sCurrentPath.substr( 0, find );
+            if( bIncludeSeparate == true )
+                ret = ret + L'/';
+
+            return ret;
         }
 
         std::wstring ConvertSeparator( const std::wstring& sStr )
@@ -35,10 +42,15 @@ namespace Shared
         {
             return std::filesystem::exists( sPath );
         }
-
+#ifdef USING_QTLIB
+        bool IsExistFile( const QString& sPath )
+        {
+            return std::filesystem::exists( sPath.toStdWString() );
+        }
+#endif
         std::wstring SeparateFileNameToExts( const std::wstring& sFileFullPath )
         {
-            // TODO : ÇöÀç È®ÀåÀÚ°¡ ¾ø´Â ÆÄÀÏÀº °í·ÁµÇ°í ÀÖÁö ¾ÊÀ½ Ãß°¡ ÇÊ¿ä
+            // TODO : í˜„ì¬ í™•ì¥ìê°€ ì—†ëŠ” íŒŒì¼ì€ ê³ ë ¤ë˜ê³  ìˆì§€ ì•ŠìŒ ì¶”ê°€ í•„ìš”
             if( sFileFullPath.empty() == true )
                 return std::wstring();
 
@@ -50,7 +62,7 @@ namespace Shared
 
         std::wstring GetFileExts( const std::wstring& sFileFullPath )
         {
-            // TODO : ÇöÀç È®ÀåÀÚ°¡ ¾ø´Â ÆÄÀÏÀº °í·ÁµÇ°í ÀÖÁö ¾ÊÀ½ Ãß°¡ ÇÊ¿ä
+            // TODO : í˜„ì¬ í™•ì¥ìê°€ ì—†ëŠ” íŒŒì¼ì€ ê³ ë ¤ë˜ê³  ìˆì§€ ì•ŠìŒ ì¶”ê°€ í•„ìš”
             if( sFileFullPath.empty() == true )
                 return std::wstring();
 
@@ -62,6 +74,15 @@ namespace Shared
         uintmax_t GetFileSize( const std::wstring& sPath )
         {
             return std::filesystem::file_size( sPath );
+        }
+
+        std::wstring AppendSeparator( const std::wstring& sPath )
+        {
+            std::wstring sConvertPath = ConvertSeparator( sPath );
+            if( String::EndsWith( sConvertPath, L"/" ) == false )
+                return ( sPath + L"/" );
+            else
+                return sPath;
         }
     }
 }
