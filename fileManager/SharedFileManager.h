@@ -3,10 +3,13 @@
 #endif
 
 #include "Singleton.h"
+#include "SharedLibInit.h"
+
 #include <string>
 #include <Windows.h>
 #include <queue>
 #include <mutex>
+#include <unordered_map>
 
 #ifdef USING_QTLIB
 #include <qdatetime.h>

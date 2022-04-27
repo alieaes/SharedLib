@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "SharedPath.h"
+﻿#include "SharedPath.h"
 #include "SharedString.h"
 
 #include "Shared_Defs.h"

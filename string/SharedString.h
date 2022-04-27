@@ -2,7 +2,8 @@
 #define __HDR_SHARED_STRING__
 
 #include "Singleton.h"
-#include <formatter/format.h>
+#include "SharedLibInit.h"
+
 #include <string>
 #include <time.h>
 #include <Windows.h>
@@ -18,6 +19,9 @@ namespace Shared
     {
         std::wstring                 s2ws( const std::string& str );
         std::string                  ws2s( const std::wstring& wstr );
+
+        wchar_t*                      c2wc( const char* str );
+        char*                         wc2c( const wchar_t* str );
 
         bool                         EndsWith( const std::string& sFullString, const std::string& sEnds );
         bool                         EndsWith( const std::wstring& sFullString, const std::wstring& sEnds );

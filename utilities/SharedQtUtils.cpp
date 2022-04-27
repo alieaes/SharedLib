@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "SharedPath.h"
 #include "Shared_Defs.h"
 

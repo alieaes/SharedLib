@@ -1,13 +1,13 @@
-﻿#include "stdafx.h"
+﻿#include "SharedLibInit.h"
 
 #include "SharedFileManager.h"
 #include "SharedPath.h"
 #include "Shared_Defs.h"
 #include "string/SharedString.h"
-#include "formatter/format.h"
 
 #include <thread>
 #include <fstream>
+#include <format>
 
 #ifdef USING_QTLIB
 #include <qdatetime.h>
@@ -27,7 +27,7 @@ FileMgr::~FileMgr()
     _thMain.join();
 }
 
-bool FileMgr::InitFileMgr( FILEMGR fileMgr )
+bool Shared::FileManager::FileMgr::InitFileMgr(FILEMGR fileMgr)
 {
     bool isSuccess = false;
     std::wstring sUnique;
@@ -52,7 +52,7 @@ bool FileMgr::InitFileMgr( FILEMGR fileMgr )
     return isSuccess;
 }
 
-void FileMgr::WriteFileContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
+void Shared::FileManager::FileMgr::WriteFileContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
 {
     if( IsStop() == true )
         return;
@@ -77,7 +77,7 @@ void FileMgr::WriteFileContents( FILE_UNIQUE_NAME sUnique, std::wstring sContent
     }
 }
 
-FILEMGR FileMgr::retrieveFileMgr( FILE_UNIQUE_NAME sUnique )
+FILEMGR Shared::FileManager::FileMgr::retrieveFileMgr( FILE_UNIQUE_NAME sUnique )
 {
     if( _mapFileMgr.count( sUnique ) == 0 )
         return FILEMGR();
@@ -85,7 +85,7 @@ FILEMGR FileMgr::retrieveFileMgr( FILE_UNIQUE_NAME sUnique )
     return _mapFileMgr[ sUnique ];
 }
 
-void FileMgr::AsyncFileWrite( LPVOID lpParam )
+void Shared::FileManager::FileMgr::AsyncFileWrite( LPVOID lpParam )
 {
     FileMgr* cFileMgr = ( FileMgr* )lpParam;
 
@@ -100,13 +100,13 @@ void FileMgr::AsyncFileWrite( LPVOID lpParam )
     }
 }
 
-void FileMgr::enQueueItem( FILEITEM item )
+void Shared::FileManager::FileMgr::enQueueItem( FILEITEM item )
 {
     std::lock_guard< std::mutex > lock( _mutex );
     _queue.push( item );
 }
 
-FILEITEM FileMgr::deQueueItem()
+FILEITEM Shared::FileManager::FileMgr::deQueueItem()
 {
     std::lock_guard< std::mutex > lock( _mutex );
     if( _queue.size() > 0 )
@@ -120,7 +120,7 @@ FILEITEM FileMgr::deQueueItem()
         return FILEITEM();
 }
 
-void FileMgr::writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
+void Shared::FileManager::FileMgr::writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
 {
     FILEMGR fileMgr = retrieveFileMgr( sUnique );
 
@@ -144,7 +144,7 @@ void FileMgr::writeContents( FILE_UNIQUE_NAME sUnique, std::wstring sContents )
     ofs.close();
 }
 
-std::wstring FileMgr::checkFileNumbering( FILE_UNIQUE_NAME sUnique )
+std::wstring Shared::FileManager::FileMgr::checkFileNumbering( FILE_UNIQUE_NAME sUnique )
 {
     FILEMGR fileMgr = retrieveFileMgr( sUnique );
 
@@ -158,7 +158,7 @@ std::wstring FileMgr::checkFileNumbering( FILE_UNIQUE_NAME sUnique )
 
     for( int idx = 0; idx < fileMgr.nMaxFileCnt; ++idx )
     {
-        std::wstring sTmp = fmt::format( L"{}-[{}]{}", sFileName, idx, sExts );
+        std::wstring sTmp = std::format( L"{}-[{}]{}", sFileName, idx, sExts );
 
         if( Shared::Path::IsExistFile( sTmp ) == true )
         {

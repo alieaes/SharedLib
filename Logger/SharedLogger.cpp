@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "SharedLibInit.h"
+
 #include "SharedLogger.h"
 
 #include <iostream>
@@ -16,8 +17,9 @@
 using namespace Shared::Logger;
 using namespace Shared::FileManager;
 using namespace Shared::Path;
+using namespace Shared::String;
 
-void Log::init( TyLogger tyLogger )
+void Shared::Logger::Log::init(TyLogger tyLogger)
 {
     _isFileLogging = tyLogger.isFileLogging;
 
@@ -36,19 +38,20 @@ void Log::init( TyLogger tyLogger )
     }
 }
 
-void Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format )
+void Shared::Logger::Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format )
 {
 #ifdef USING_QTLIB
     QDateTime dtNow = QDateTime::currentDateTime();
     QString sCurrentTime = dtNow.toString( DEFAULT_TIME_STRING );
-    std::string msg = fmt::format( "[{}] [{}] ({}:{}) {} \n", sCurrentTime.toStdString(), LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
+    std::string msg = std::format( "[{}] [{}] ({}:{}) {} \n", sCurrentTime.toStdString(), LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
 #else
     time_t now = time( 0 );
     struct tm  tstruct;
     char       timeForm[ 80 ];
-    tstruct = *localtime( &now );
+    localtime_s( &tstruct, &now );
     strftime( timeForm, sizeof( timeForm ), "%Y-%m-%d %X", &tstruct ); // YYYY-MM-DD.HH:mm:ss
-    std::string msg = fmt::format( "[{}] [{}] ({}:{}) {} \n", timeForm, LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
+
+    std::string msg = std::format( "[{}] [{}] ({}:{}) {} \n", timeForm, LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
 #endif // USING_QTLIB
 
     static DWORD dwNumberOfCharsWritten = 0;
@@ -62,19 +65,20 @@ void Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::s
     }
 }
 
-void Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::wstring format )
+void Shared::Logger::Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::wstring format )
 {
 #ifdef USING_QTLIB
     QDateTime dtNow = QDateTime::currentDateTime();
     QString sCurrentTime = dtNow.toString( DEFAULT_TIME_STRING );
-    std::wstring msg = fmt::format( L"[{}] [{}] ({}:{}) {} \n", sCurrentTime.toStdString(), LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
+    std::wstring msg = std::format( L"[{}] [{}] ({}:{}) {} \n", sCurrentTime.toStdString(), LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
 #else
     time_t now = time( 0 );
     struct tm  tstruct;
     char       timeForm[ 80 ];
-    tstruct = *localtime( &now );
+    localtime_s( &tstruct, &now );
     strftime( timeForm, sizeof( timeForm ), "%Y-%m-%d %X", &tstruct ); // YYYY-MM-DD.HH:mm:ss
-    std::string msg = fmt::format( "[{}] [{}] ({}:{}) {} \n", timeForm, LOGTYPE, strrchr( fileName, '\\' ) ? strrchr( fileName, '\\' ) + 1 : fileName, codeLine, format );
+
+    std::wstring msg = std::format( L"[{}] [{}] ({}:{}) {} \n", c2wc( timeForm ), s2ws( LOGTYPE ), c2wc( strrchr( fileName, '\\' ) ) ? c2wc( strrchr( fileName, '\\' ) ) + 1 : c2wc( fileName ), codeLine, format );
 #endif // USING_QTLIB
 
     static DWORD dwNumberOfCharsWritten = 0;
@@ -88,13 +92,13 @@ void Log::Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::w
     }
 }
 
-void Log::ConsolePrint( const char* fileName, int codeLine, std::wstring format )
+void Shared::Logger::Log::ConsolePrint( const char* fileName, int codeLine, std::wstring format )
 {
-    std::wstring msg = fmt::format( L"{}\n", format );
+    std::wstring msg = format;
     static DWORD dwNumberOfCharsWritten = 0;
     WriteConsoleW( GetStdHandle( STD_OUTPUT_HANDLE ), msg.c_str(), ( DWORD )msg.size(), &dwNumberOfCharsWritten, NULL );
 }
 
-void Log::Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format )
+void Shared::Logger::Log::Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format )
 {
 }

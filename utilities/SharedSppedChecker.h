@@ -5,7 +5,6 @@
 
 #include "Singleton.h"
 
-#include <formatter/format.h>
 #include <string>
 #include <time.h>
 #include <Windows.h>

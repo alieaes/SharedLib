@@ -2,10 +2,10 @@
 #define __HDR_SHARED_QTUTILS__
 #endif
 
-#include "stdafx.h"
-
 #include <string>
 #include <Windows.h>
+
+#include "SharedLibInit.h"
 
 #ifdef USING_QTLIB
 #include <qdatetime.h>

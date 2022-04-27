@@ -1,8 +1,8 @@
-﻿#include "stdafx.h"
-#include "Logger/SharedLogger.h"
+﻿#include "Logger/SharedLogger.h"
 #include "SharedSppedChecker.h"
 #include "string/SharedString.h"
 
+#include <cassert>
 #ifdef USING_QTLIB
 #include <qdatetime.h>
 #endif

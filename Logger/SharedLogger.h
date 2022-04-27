@@ -2,10 +2,13 @@
 #define __HDR_SHARED_LOGGER__
 #endif
 
+#pragma once
+
 #include "SharedLibInit.h"
 #include "Singleton.h"
 
-#include <formatter/format.h>
+#include <format>
+
 #include <string>
 #include <time.h>
 #include <Windows.h>
@@ -15,10 +18,10 @@
 #endif // USING_QTLIB
 
 #define LOGD(LOGTYPE, ...) \
-    TyStLog::GetInstance()->Debug(LOGTYPE, __FILE__, __LINE__, fmt::format(__VA_ARGS__))
+    TyStLog::GetInstance()->Debug(LOGTYPE, __FILE__, __LINE__, std::format(__VA_ARGS__))
 
 #define CONSOLEP(...) \
-    TyStLog::GetInstance()->ConsolePrint( __FILE__, __LINE__, fmt::format(__VA_ARGS__))
+    TyStLog::GetInstance()->ConsolePrint( __FILE__, __LINE__, std::format(__VA_ARGS__))
 
 #define USE_LOGGER_INIT
 

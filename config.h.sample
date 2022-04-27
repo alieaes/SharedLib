@@ -1,0 +1,9 @@
+#define SET_CONFIG
+
+// 기능을 사용하기 위해 DEFINE을 주석해제하여 기능 사용을 하도록 함
+
+// LOGGER 기능
+// #define USING_SHARED_LOGGER
+
+// QT 관련 기능
+// #define USING_QTLIB
