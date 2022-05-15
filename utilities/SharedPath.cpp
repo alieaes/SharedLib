@@ -19,7 +19,7 @@ namespace Shared
             std::wstring ret;
             wchar_t result[ MAX_PATH ];
             std::wstring sCurrentPath = std::wstring( result, GetModuleFileName( NULL, result, MAX_PATH ) );
-            sCurrentPath = ConvertSeparator( sCurrentPath );
+            sCurrentPath = NormalizeSeparator( sCurrentPath );
 
             int find = sCurrentPath.rfind( L'/' );
 
@@ -30,7 +30,7 @@ namespace Shared
             return ret;
         }
 
-        std::wstring ConvertSeparator( const std::wstring& sStr )
+        std::wstring NormalizeSeparator( const std::wstring& sStr )
         {
             std::wstring sPath = sStr;
             std::replace( sPath.begin(), sPath.end(), L'\\', L'/' );
@@ -77,11 +77,37 @@ namespace Shared
 
         std::wstring AppendSeparator( const std::wstring& sPath )
         {
-            std::wstring sConvertPath = ConvertSeparator( sPath );
+            std::wstring sConvertPath = NormalizeSeparator( sPath );
             if( String::EndsWith( sConvertPath, L"/" ) == false )
                 return ( sPath + L"/" );
             else
                 return sPath;
+        }
+
+        std::wstring GetFileName( const std::wstring& sFileFullPath )
+        {
+            // TODO : 현재 확장자가 없는 파일은 고려되고 있지 않음 추가 필요
+            if( sFileFullPath.empty() == true )
+                return std::wstring();
+
+            std::wstring sNor = NormalizeSeparator( sFileFullPath );
+
+            int find = sNor.rfind( L'/' );
+
+            return sNor.substr( find + 1, sNor.size() - 1 );
+        }
+
+        std::wstring GetFilePath( const std::wstring& sFileFullPath )
+        {
+            // TODO : 현재 확장자가 없는 파일은 고려되고 있지 않음 추가 필요, 경로 마지막의 구분자를 포함할지의 여부도 필요
+            if( sFileFullPath.empty() == true )
+                return std::wstring();
+
+            std::wstring sNor = NormalizeSeparator( sFileFullPath );
+
+            int find = sNor.rfind( L'/' );
+
+            return sNor.substr( 0, find );
         }
     }
 }
