@@ -17,13 +17,15 @@
 #include <qdatetime.h>
 #endif // USING_QTLIB
 
-#define LOGD(LOGTYPE, ...) \
-    TyStLog::GetInstance()->Debug(LOGTYPE, __FILE__, __LINE__, std::format(__VA_ARGS__))
-
-#define CONSOLEP(...) \
-    TyStLog::GetInstance()->ConsolePrint( __FILE__, __LINE__, std::format(__VA_ARGS__))
-
 #define USE_LOGGER_INIT
+
+typedef enum
+{
+    LOGGER_NONE,
+    LOGGER_DEBUG,
+    LOGGER_CONSOLE,
+    LOGGER_LIBS
+} TyEnLogger;
 
 namespace Shared
 {
@@ -42,12 +44,14 @@ namespace Shared
 
             static void              init( TyLogger tyLogger );
             // 디버그용 로그
-            static void              Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::string format );
-            static void              Debug( std::string LOGTYPE, const char* fileName, int codeLine, std::wstring format );
+            static void              LogCase( TyEnLogger eLogType, const char* fileName, int codeLine, std::string format );
+            static void              LogCase( TyEnLogger eLogType, const char* fileName, int codeLine, std::wstring format );
 
-            static void              ConsolePrint( const char* fileName, int codeLine, std::wstring format );
-            // 파일 기록용 로그
-            static void              Recode( const char* LOGTYPE, const char* fileName, int codeLine, std::string format );
+            static void              Logging( const char* fileName, int codeLine, std::string format );
+            static void              Logging( const char* fileName, int codeLine, std::wstring format );
+
+            static void              ConsolePrint( std::wstring format );
+            static void              ConsolePrint( std::string format );
 
         private:
             inline static bool       _isFileLogging;
