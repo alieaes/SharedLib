@@ -16,3 +16,8 @@
 #define IF_TRUE_CONTINUE(x) if( (x) == true ) continue;
 
 #define DEFAULT_TIME_STRING "yyyy-MM-dd HH:mm:ss"
+
+#define LV_DEBUG "DEBUG"
+#define LV_INFO "INFO"
+#define LV_CRITICAL "CRITICAL"
+#define LV_ERROR "ERROR"

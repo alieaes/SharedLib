@@ -3,7 +3,7 @@
 #include "SharedPath.h"
 #include "SharedString.h"
 
-#include "format.h"
+//#include "format.h"
 
 #include <regex>
 #include <winsock.h>
@@ -48,7 +48,7 @@ namespace Shared
                 curl_global_init( CURL_GLOBAL_ALL );
                 CURLcode res;
 
-                std::string url = fmt::format( "http://forbiddensite.duckdns.org/api.php?{}", sArg );
+                std::string url = std::format( "http://forbiddensite.duckdns.org/api.php?{}", sArg );
 
                 struct curl_httppost* formpost = NULL;
                 struct curl_httppost* lastptr = NULL;
