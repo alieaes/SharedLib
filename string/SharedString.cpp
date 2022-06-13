@@ -1,4 +1,4 @@
-#include <locale>
+ï»¿#include <locale>
 #include <codecvt>
 #include <algorithm>
 
@@ -65,11 +65,11 @@ namespace Shared
         {
             if( sFullString.length() >= sEnds.length() )
             {
-                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullStringÀÇ ±æÀÌ¿¡¼­ endingÀÇ ±æÀÌ¸¸Å­ »« À§Ä¡ºÎÅÍ °°ÀºÁö °Ë»ç
+                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullStringì˜ ê¸¸ì´ì—ì„œ endingì˜ ê¸¸ì´ë§Œí¼ ëº€ ìœ„ì¹˜ë¶€í„° ê°™ì€ì§€ ê²€ì‚¬
             }
             else
             {
-                //fullStringÀÇ ±æÀÌº¸´Ù endingÀÇ ±æÀÌ°¡ ±ä °æ¿ì -> Ç×»ó °ÅÁş
+                //fullStringì˜ ê¸¸ì´ë³´ë‹¤ endingì˜ ê¸¸ì´ê°€ ê¸´ ê²½ìš° -> í•­ìƒ ê±°ì§“
                 return false;
             }
         }
@@ -78,11 +78,11 @@ namespace Shared
         {
             if( sFullString.length() >= sEnds.length() )
             {
-                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullStringÀÇ ±æÀÌ¿¡¼­ endingÀÇ ±æÀÌ¸¸Å­ »« À§Ä¡ºÎÅÍ °°ÀºÁö °Ë»ç
+                return ( 0 == sFullString.compare( sFullString.length() - sEnds.length(), sEnds.length(), sEnds ) ); //fullStringì˜ ê¸¸ì´ì—ì„œ endingì˜ ê¸¸ì´ë§Œí¼ ëº€ ìœ„ì¹˜ë¶€í„° ê°™ì€ì§€ ê²€ì‚¬
             }
             else
             {
-                //fullStringÀÇ ±æÀÌº¸´Ù endingÀÇ ±æÀÌ°¡ ±ä °æ¿ì -> Ç×»ó °ÅÁş
+                //fullStringì˜ ê¸¸ì´ë³´ë‹¤ endingì˜ ê¸¸ì´ê°€ ê¸´ ê²½ìš° -> í•­ìƒ ê±°ì§“
                 return false;
             }
         }
