@@ -24,6 +24,20 @@ namespace Shared
 
             return szTemp;
         }
+
+        unsigned long GetCurrentKeyBoardLang()
+        {
+            auto hWnd = GetConsoleWindow();
+            unsigned long Conversion, Sentence;
+            HIMC Mode = ImmGetContext( hWnd );
+            ImmGetConversionStatus( Mode, &Conversion, &Sentence );
+            return Conversion;
+        }
+
+        bool IsCurrentKoreanLang()
+        {
+            return ( GetCurrentKeyBoardLang() == IME_CMODE_HANGEUL );
+        }
     }
 }
 

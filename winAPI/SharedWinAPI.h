@@ -16,5 +16,7 @@ namespace Shared
     namespace winAPI
     {
         std::wstring                 GetPCName();
+        unsigned long                GetCurrentKeyBoardLang();
+        bool                         IsCurrentKoreanLang();
     }
 }
