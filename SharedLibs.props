@@ -5,7 +5,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(Solutiondir);$(Projectdir);$(Solutiondir)SharedLib;$(Solutiondir)SharedLib\fileManager;$(Solutiondir)SharedLib\formatter;$(Solutiondir)SharedLib\Logger;$(Solutiondir)SharedLib\sqlite;$(Solutiondir)SharedLib\string;$(Solutiondir)SharedLib\utilities;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Solutiondir);$(Projectdir);$(Solutiondir)SharedLib;$(Solutiondir)SharedLib\fileManager;$(Solutiondir)SharedLib\formatter;$(Solutiondir)SharedLib\Logger;$(Solutiondir)SharedLib\sqlite;$(Solutiondir)SharedLib\string;$(Solutiondir)SharedLib\utilities;$(Solutiondir)SharedLib\formatter\include\fmt;$(Solutiondir)SharedLib\formatter\include;$(Solutiondir)SharedLib\formatter\src;$(Solutiondir)SharedLib\winAPI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
